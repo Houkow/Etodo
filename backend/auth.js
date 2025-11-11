@@ -1,14 +1,15 @@
-
-
+const cors = require('cors');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const db = require('./db');
 
 
+
 const app = express();
-const PORT= 3000;
+const PORT= 8000;
 
 app.use(express.json());
+app.use(cors({origin: 'http://localhost:3000'}));
 
 const router = express.Router();
 

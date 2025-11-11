@@ -14,7 +14,7 @@ function Login() {
     setErrors({ ...errors, [name]: '' })
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     let newErrors = { email: '', password: '' }
 
@@ -27,10 +27,25 @@ function Login() {
     }
 
     setLoading(true)
-    setTimeout(() => {
+
+    try {
+      const res = await fetch('http://localhost:8000/user/login', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify(user), 
+      })
+   if (!res.ok) { 
+        const text = await res.text()
+        alert(`Registration failed: ${text}`)
+      } else {
+        alert('login succesfully !')
+      }
+    } catch (err) {
+      console.error('Error:', err) 
+      alert('Server error. Please try again.')
+    } finally {
       setLoading(false)
-      alert('Login successful!')
-    }, 2000)
+    }
   }
 
   return (
@@ -58,7 +73,7 @@ function Login() {
                 placeholder="Enter your email"
                 value={user.email}
                 onChange={handleChange}
-                className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 ${
+                className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${
                   errors.email ? 'border-red-500 ring-red-200' : 'border-gray-300'
                 }`}
               />
@@ -82,7 +97,7 @@ function Login() {
                 placeholder="Enter your password"
                 value={user.password}
                 onChange={handleChange}
-                className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 ${
+                className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${
                   errors.password ? 'border-red-500 ring-red-200' : 'border-gray-300'
                 }`}
               />

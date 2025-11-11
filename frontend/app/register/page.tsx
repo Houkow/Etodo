@@ -1,9 +1,9 @@
 'use client'
 import { LoaderCircle, Lock, Mail, UserPen, UserRoundPen } from 'lucide-react'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, use, useState } from 'react'
 import Link from 'next/link'
 
-function register() {
+function Register() {
   const [user, setUser] = useState({ name: '', firstname:'', email: '', password: '' })
   const [errors, setErrors] = useState({ email: '', password: '' , firstname: '', name:''})
   const [loading, setLoading] = useState(false)
@@ -14,7 +14,7 @@ function register() {
     setErrors({ ...errors, [name]: '' })
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit =  async (e: FormEvent) => {
     e.preventDefault()
     let newErrors = { email: '', password: '', firstname: '', name: ''}
 
@@ -27,12 +27,27 @@ function register() {
       setErrors(newErrors)
       return
     }
+   setLoading(true)
 
-    setLoading(true)
-    setTimeout(() => {
+    try {
+      const res = await fetch('http://localhost:8000/user/register', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify(user), 
+      })
+
+      if (!res.ok) { 
+        const text = await res.text()
+        alert(`Registration failed: ${text}`)
+      } else {
+        alert('User registered successfully!')
+      }
+    } catch (err) {
+      console.error('Error:', err) 
+      alert('Server error. Please try again.')
+    } finally {
       setLoading(false)
-      alert('Login successful!')
-    }, 2000)
+    }
   }
 
   return (
@@ -157,4 +172,4 @@ function register() {
   )
 }
 
-export default register
+export default Register;
