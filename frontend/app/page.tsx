@@ -30,18 +30,22 @@ function Login() {
 
     try {
       const res = await fetch('http://localhost:8000/user/login', {
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' }, 
-        body: JSON.stringify(user), 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user),
       })
-   if (!res.ok) { 
+      if (!res.ok) {
         const text = await res.text()
         alert(`Registration failed: ${text}`)
       } else {
+        const data = await res.json();
+        const token = data.token;     
+        localStorage.setItem("Token", token);
         alert('login succesfully !')
+
       }
     } catch (err) {
-      console.error('Error:', err) 
+      console.error('Error:', err)
       alert('Server error. Please try again.')
     } finally {
       setLoading(false)
@@ -73,9 +77,8 @@ function Login() {
                 placeholder="Enter your email"
                 value={user.email}
                 onChange={handleChange}
-                className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${
-                  errors.email ? 'border-red-500 ring-red-200' : 'border-gray-300'
-                }`}
+                className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${errors.email ? 'border-red-500 ring-red-200' : 'border-gray-300'
+                  }`}
               />
             </div>
             {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
@@ -97,9 +100,8 @@ function Login() {
                 placeholder="Enter your password"
                 value={user.password}
                 onChange={handleChange}
-                className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${
-                  errors.password ? 'border-red-500 ring-red-200' : 'border-gray-300'
-                }`}
+                className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${errors.password ? 'border-red-500 ring-red-200' : 'border-gray-300'
+                  }`}
               />
             </div>
             {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
@@ -119,7 +121,7 @@ function Login() {
             {loading ? <LoaderCircle className="animate-spin" size={20} /> : 'Login'}
           </button>
         </form>
-                  
+
         {/* Sign up */}
         <div className="mt-4 text-center">
           <span className="text-sm text-gray-600">New here? </span>
