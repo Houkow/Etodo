@@ -2,14 +2,14 @@
 const express = require('express');
 const Jwt = require('jsonwebtoken');
 const app = express();
-const verifyToken = require("./verifyToken");
 const port = 3000;
+const auth = require("middleware")
 
+require("dotenv").config();
 
 app.use(express.json());
 
-
-const SECRET_KEY = "my_super_secret_key";
+const SECRET_KEY = process.env.SECRET
 app.get('/jwt', (req, res) => {
   console.log(req.body)
   const userData = req.body;
@@ -21,7 +21,6 @@ app.get('/jwt', (req, res) => {
     
     res.header('Authorization', 'Bearer ' + token);
 
-    
     res.json({
       status: true,
       message: "Token generated successfully ",
