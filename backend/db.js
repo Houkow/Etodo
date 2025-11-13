@@ -1,7 +1,9 @@
 
 
-require('dotenv').config();
-const mysql = require('mysql2');
+import dotenv from 'dotenv';
+import mysql from 'mysql2';
+
+dotenv.config();
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -15,4 +17,4 @@ connection.connect((err) => {
     console.log('Connected to MySQL database!');
 });
 
-module.exports = connection;
+export default connection;
