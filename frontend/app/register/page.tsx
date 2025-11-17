@@ -163,7 +163,7 @@ function Register() {
         {/* Sign up */}
         <div className="mt-4 text-center">
           <span className="text-sm text-gray-600">Do you have an account ? </span>
-          <Link href="/" className="text-sm font-medium text-blue-600 hover:underline">
+          <Link href="/login" className="text-sm font-medium text-blue-600 hover:underline">
             Login
           </Link>
         </div>

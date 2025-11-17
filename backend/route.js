@@ -1,6 +1,6 @@
 import express from 'express';
 import connection from './db.js';
-import router, { checkJWT } from './auth.js';
+import router, { checkJWT,} from './auth.js';
 import cors from 'cors';
 
 const app = express();
@@ -22,6 +22,7 @@ app.get('/test', checkJWT, async (req, res) => {
             if (results.length > 0) {
                 user = results[0];
                 console.log("user  inside callback: ", user)
+            
             } else {
                 res.status(404).send('User not found');
             }
@@ -35,6 +36,7 @@ app.get('/test', checkJWT, async (req, res) => {
                 name: user.name,
                 firstname: user.firstname,
                 email: user.email,
+                role : user.role
             });
         });
 

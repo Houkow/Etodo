@@ -17,6 +17,7 @@ CREATE TABLE todo (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     due_time DATETIME NOT NULL,
     status ENUM('not started','todo','in progress','done') DEFAULT 'not started',
+    role ENUM('employee', 'manager') DEFAULT 'employee',
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
