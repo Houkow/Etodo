@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">✓</div>
+            <span>Ma To-Do List</span>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" id="themeToggle">🌙</button>
+            <div class="user-menu">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-user-info">
+                <strong id="userEmail">user@example.com</strong>
+            </div>
+            <div class="dropdown-divider"></div>
+            <ul>
+                <li><a class="dropdown-item" href="#">Mon compte</a></li>
+                <li><a class="dropdown-item" href="#">Paramètre</a></li>
+                <li><a class="dropdown-item" href="#" id="logoutBtn">Se deconnecter</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="container">
+        <div class="welcome">
+            <h1>Bonjour, <span id="userFirstName"></span>! 👋</h1>
+            <p>Voici un aperçu de vos tâches et de votre planning</p>
+        </div>
+        <div class="search-bar">
+            <span>🔍</span>
+            <input type="text" placeholder="Rechercher des tâches..." id="searchInput">
+            <button class="filter-btn" id="filterBtn">🔽 Filtres</button>
+        </div>
+        <div class="toolbar">
+            <button class="toolbar-btn active" data-view="apercu">☷ Aperçu</button>
+            <button class="toolbar-btn" data-view="liste">☰ Liste</button>
+            <button class="toolbar-btn" data-view="kanban">⊡ Kanban</button>
+            <button class="toolbar-btn" data-view="tableau">⊞ Tableau</button>
+            <button class="toolbar-btn" data-view="timeline">◴ Timeline</button>
+            <button class="toolbar-btn" data-view="planning">📅 Planning</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Total des tâches</h3>
+                    <div class="value" id="totalTasks">0</div>
+                </div>
+                <div class="stat-icon blue">○</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Tâches complétées</h3>
+                    <div class="value" id="completedTasks">0</div>
+                </div>
+                <div class="stat-icon green">○</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>En attente</h3>
+                    <div class="value" id="pendingTasks">0</div>
+                </div>
+                <div class="stat-icon orange">○</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Taux de complétion</h3>
+                    <div class="value" id="completionRate">0%</div>
+                </div>
+                <div class="stat-icon purple">○</div>
+            </div>
+        </div>
+        <div class="tasks-section">
+            <div class="tasks-header">
+                <h2>Mes tâches</h2>
+                <button class="btn-primary" id="addTaskBtn">+ Nouvelle tâche</button>
+            </div>
+            <div class="tasks-container" id="tasksContainer">
+                <div class="empty-state">
+                    <p>Aucune tâche à afficher</p>
+                    <button class="btn-secondary" id="createFirstTask">Créer votre première tâche</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Nouvelle tâche</h2>
+                <button class="close-btn" id="closeModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="taskTitle" class="form-label">Titre *</label>
+                    <input type="text" class="form-control" id="taskTitle" placeholder="Ex: Acheter du lait" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="taskDescription" placeholder="Détails de la tâche..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskDueDate" class="form-label">Date d'échéance</label>
+                    <input type="date" class="form-control" id="taskDueDate">
+                </div>
+            </div>
+            <div class="form-group">
+    <label for="taskPriority" class="form-label">Priorité</label>
+    <select class="form-control" id="taskPriority">
+        <option value="low">Basse</option>
+        <option value="medium" selected>Moyenne</option>
+        <option value="high">Haute</option>
+    </select>
+</div>
+<div class="form-group" id="assignToGroup">
+    <label for="taskAssignTo" class="form-label">Assigner à</label>
+    <select class="form-control" id="taskAssignTo">
+        <option value="">Moi-même</option>
+        <option value="emp1">Employé 1</option>
+        <option value="emp2">Employé 2</option>
+        <option value="emp3">Employé 3</option>
+    </select>
+</div>
+   <div class="modal-footer">
+        <button class="btn-secondary" id="cancelBtn">Annuler</button>
+        <button class="btn-primary" id="saveTaskBtn">
+            <span id="saveBtnText">Créer</span>
+        </button>
+    </div>
+    </div>
+    </div>
+    <script src="darkmode.js"></script>
+</body>
+</html>
