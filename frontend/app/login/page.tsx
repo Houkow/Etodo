@@ -1,7 +1,8 @@
-'use client'
+"use client"
 import { LoaderCircle, Lock, Mail } from 'lucide-react'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import Link from 'next/link'
+import { redirect, RedirectType } from 'next/navigation'
 
 function Login() {
   const [user, setUser] = useState({ email: '', password: '' })
@@ -28,27 +29,22 @@ function Login() {
 
     setLoading(true)
 
-    try {
-      const res = await fetch('http://localhost:8000/user/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user),
-      })
-      if (!res.ok) {
-        const text = await res.text()
-        alert(`Registration failed: ${text}`)
-      } else {
-        const data = await res.json();
-        const token = data.token;     
-        localStorage.setItem("Token", token);
-        alert('login succesfully !')
-
-      }
-    } catch (err) {
-      console.error('Error:', err)
-      alert('Server error. Please try again.')
-    } finally {
+    const res = await fetch('http://localhost:8000/user/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
+    })
+    if (!res.ok) {
+      const text = await res.text()
+      alert(`Registration failed: ${text}`)
       setLoading(false)
+    } else {
+      const data = await res.json();
+      const token = data.token;     
+      localStorage.setItem("Token", token);
+      alert('login succesfully !')
+      setLoading(false)
+      redirect('/test', RedirectType.push)
     }
   }
 
@@ -133,5 +129,6 @@ function Login() {
     </div>
   )
 }
+
 
 export default Login

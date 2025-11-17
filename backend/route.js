@@ -9,9 +9,8 @@ const PORT = 8000;
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000' }));
 
-app.get('/register', checkJWT, async (req, res) => {
+app.get('/test', checkJWT, async (req, res) => {
     try {
-        // console.log("req: ", req)
         const user_email = req.user.email;
         console.log(user_email)
         var user;
