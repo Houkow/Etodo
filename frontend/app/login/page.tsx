@@ -44,7 +44,7 @@ function Login() {
       localStorage.setItem("Token", token);
       alert('login succesfully !')
       setLoading(false)
-      redirect('/test', RedirectType.push)
+      redirect('/accueil', RedirectType.push)
     }
   }
 

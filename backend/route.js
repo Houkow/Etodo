@@ -46,9 +46,43 @@ app.get('/test', checkJWT, async (req, res) => {
     }
 });
 
-app.post('/login', (req, res) => {
-    res.send('connect a user');
+app.get('/table', checkJWT, async (req, res) => {
+    try {
+        const user_email = req.user.email;
+        console.log(user_email)
+        var user;
+
+        const query = 'SELECT * FROM users WHERE email = ?';
+        connection.query(query, [user_email], function (err, results) {
+            if (err) throw err;
+
+            if (results.length > 0) {
+                user = results[0];
+                console.log("user  inside callback: ", user)
+            
+            } else {
+                res.status(404).send('User not found');
+            }
+
+            // A move en dehors a l'avenir
+            console.log("user before res: ", user)
+            console.log("hello")
+    
+            res.json({
+                id: user.id,
+                name: user.name,
+                firstname: user.firstname,
+                email: user.email,
+                role : user.role
+            });
+        });
+
+
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error' });
+    }
 });
+
 app.get('/user', (req, res) => {
     res.send('view all user information');
 });
