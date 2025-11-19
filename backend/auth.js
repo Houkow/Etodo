@@ -52,7 +52,7 @@ router.post('/login', (req, res) => {
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (isMatch) {
-        const token = Jwt.sign({ password: user.password, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+        const token = Jwt.sign({ password: user.password, email: user.email, id: user.id}, JWT_SECRET, { expiresIn: '1h' });
         res.status(200).json({ message: 'Login successful', token });
         console.log('Token généré :', token);
       } else {

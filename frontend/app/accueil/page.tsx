@@ -2,9 +2,19 @@
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation'
 
+interface Todo {
+  id: number
+  title: string
+  status: string
+  created_at: string
+  description: string
+  due_time: string
+  user_id: number
+}
 
 export default function accueil() {
   const [data, setData] = useState({ name: "", role: "", firstname: "" })
+  const [displaytask, setdisplaytask] = useState<Todo[]>([])
   const router = useRouter()
 
   const getData = async () => {
@@ -13,7 +23,7 @@ export default function accueil() {
       router.push('/login')
       return
     }
-    const res = await fetch('http://localhost:8000/test', {
+    const res = await fetch('http://localhost:8000/user', {
 
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -30,8 +40,42 @@ export default function accueil() {
     setData(json)
   }
 
+   //////////////////
+
+  const disptask = async () => {
+    const token = localStorage.getItem("Token")
+    if (!token) {
+      router.push('/login')
+      return
+    }
+    const res = await fetch('http://localhost:8000/user/todos', {
+
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+
+    })
+    
+    if (res.status === 401 || res.status === 403) {
+      localStorage.removeItem("Token")
+      router.push('/login')
+      return
+    }
+    const jsontask = await res.json()
+    if (jsontask.todos)
+    {
+      console.log(jsontask)
+      setdisplaytask(jsontask.todos)
+      console.log(displaytask)
+    }
+  }
+  
+
+
   useEffect(() => {
-    getData();
+    getData(),
+    disptask();
   }, [])
 
 
@@ -74,6 +118,15 @@ export default function accueil() {
       </header>
       <section>
         <h2>Task of the day {}</h2>
+
+
+        <ul>
+          {displaytask.length===0 && <p>No task assigned yet !</p>}
+          {
+           displaytask.map((item) => (
+            <p key={item.id}> <br/><strong>- Title :</strong> {item.title} <strong><br/>Description of the task:</strong> {item.description} <br/><strong>Creation date:</strong> {item.created_at} <br/><strong>due_time:</strong> {item.due_time} <br/> <strong>status:</strong> {item.status} </p>
+          ))}
+        </ul>
 
         <div className="section-content collapsed"> 
           <div className="section-header">

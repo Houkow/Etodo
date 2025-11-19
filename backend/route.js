@@ -9,7 +9,7 @@ const PORT = 8000;
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000' }));
 
-app.get('/test', checkJWT, async (req, res) => {
+app.get('/user', checkJWT, async (req, res) => {
     try {
         const user_email = req.user.email;
         console.log(user_email)
@@ -46,7 +46,7 @@ app.get('/test', checkJWT, async (req, res) => {
     }
 });
 
-app.get('/user/todos', checkJWT, async (req, res) => {
+app.get('/todos', checkJWT, async (req, res) => {
    try {
         var todos;
 
@@ -67,6 +67,32 @@ app.get('/user/todos', checkJWT, async (req, res) => {
             res.json({todos});
         });
 
+
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
+
+app.get('/user/todos', checkJWT, async (req, res) => {
+   try {
+        const task_userid = req.user.id;
+        const data_userid = req.query.user_id;
+        console.log(task_userid);
+
+        
+        if (data_userid && (data_userid) !== (task_userid)) {
+            return res.status(403).send('Forbidden');
+        }
+
+        const query = 'SELECT * FROM todo WHERE user_id = ? ';
+        connection.query(query, [task_userid], function (err, results) {
+
+            if (results.length > 0) {
+                return res.json({ todos: results });
+            } else {
+                return res.status(404).send('Todos not found');
+            }
+        });
 
     } catch (error) {
         res.status(500).json({ message: 'Server Error' });
