@@ -1,6 +1,7 @@
 "use client"
-import { useEffect, useState } from "react"
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
+
 
 
 export default function accueil() {
@@ -29,10 +30,16 @@ export default function accueil() {
     const json = await res.json()
     setData(json)
   }
+    if (data.role === 'employee'){
+      router.push('/unaccess')
+    }
+    
 
   useEffect(() => {
     getData();
   }, [])
+  
+
 
 
 
@@ -43,12 +50,10 @@ export default function accueil() {
     <div>
       <link rel="stylesheet" href="style.css" />
       <header>
-        <h2> 👋 Welcome to your work environment, {data.name}  !</h2>
+        <h2> Here {data.name}, you can add a new task for manage your team  !</h2>
         <nav className="navbar">
           <ul className="nav-links">
             <li><a href="/accueil">Home</a></li>
-             {data.role === "manager" && (
-            <li><a href="/taskmanager">Task manager </a></li>)}
             <li className="dropdown">
               <button className="dropbtn">
                 {data.name} {data.firstname} | {data.role}
@@ -72,8 +77,10 @@ export default function accueil() {
           </ul>
         </nav>
       </header>
-      <section>
-        <h2>Task of the day {}</h2>
+     <section>
+        <a className="buttonhome" href="">Add new task</a>
+
+        <h2>Task of the day :  </h2>
 
         <div className="section-content collapsed"> 
           <div className="section-header">

@@ -64,11 +64,7 @@ router.post('/login', (req, res) => {
   });
 });
 
-router.get('/protected', checkJWT, (req, res) => {
-  res.json({
-    message: 'Access granted ',
-    user: req.user,
-  });
-});
+
+
 
 export default router

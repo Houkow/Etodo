@@ -1,9 +1,4 @@
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+
 
 body {
   font-family: Arial, sans-serif;
@@ -188,4 +183,17 @@ footer {
 footer p {
   font-size: 16px;
   line-height: 180%;
+}
+
+
+
+.buttonhome {
+  background: linear-gradient(135deg, #4a90e2 0%, #a12ff2 100%);
+  margin: 100px 0 50px 0;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 15px;
+  margin: 100px 0 50px 0;
+  box-shadow: 0 10px 30px rgba(74, 145, 226, 0.7);
 }
