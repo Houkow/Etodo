@@ -14,7 +14,7 @@ app.get('/user', checkJWT, async (req, res) => {
         const user_email = req.user.email;
         console.log(user_email)
         var user;
-
+        
         const query = 'SELECT * FROM users WHERE email = ?';
         connection.query(query, [user_email], function (err, results) {
             if (err) throw err;
@@ -98,6 +98,29 @@ app.get('/user/todos', checkJWT, async (req, res) => {
         res.status(500).json({ message: 'Server Error' });
     }
 });
+app.put('/todos/:id', checkJWT, (req, res) => {
+    const todoId = req.params.id;
+    const { status } = req.body;
+
+    if (!status) {
+        return res.status(400).json({ message: "Missing status" });
+    }
+
+    const query = "UPDATE todo SET status = ? WHERE id = ?";
+
+    connection.query(query, [status, todoId], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Error updating task" });
+        }
+
+        return res.json({ message: "Status updated successfully" });
+    });
+});
+
+
+
+
 
 app.get('/user', (req, res) => {
     res.send('view all user information');
@@ -116,9 +139,6 @@ app.delete('/users/:id', (req, res) => {
 });
 app.get('/todos', (req, res) => {
     res.send('view all the todos');
-});
-app.get('/todos/:id', (req, res) => {
-    res.send('view the todo');
 });
 app.post('/todos', (req, res) => {
     res.send('create a todo');

@@ -10,7 +10,7 @@ export default function TestPage() {
   const getData = async () => {
     const token = localStorage.getItem("Token")
     
-    const res = await fetch('http://localhost:8000/test', {
+    const res = await fetch('http://localhost:8000/user', {
       
       headers: {
         'Authorization': `Bearer ${token}`,
