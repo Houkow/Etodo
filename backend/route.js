@@ -118,6 +118,37 @@ app.put('/todos/:id', checkJWT, (req, res) => {
     });
 });
 
+app.post('/todos', checkJWT, async (req, res) => {
+    const { title, description, due_time, user_id} = req.body;
+
+  try {
+
+    const query = 'INSERT INTO todo (title, description, due_time, user_id) VALUES (?, ?, ?, ?)';
+    connection.query(query, [title, description, due_time, user_id], (err) => {
+      if (err) throw err;
+      res.status(201).send("info has been added successfully");
+    });
+  } catch (error) {
+    res.status(500).send('Error with add info');
+  }
+});
+
+
+app.delete('/todos/:id', checkJWT, (req, res) => {
+    const todoId = req.params.id;
+
+
+    const query = "DELETE FROM todo WHERE id = ?";
+
+    connection.query(query, [todoId], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ message: "Error with delete the task" });
+        }
+
+        return res.json({ message: "line as been delete successfully" });
+    });
+});
 
 
 

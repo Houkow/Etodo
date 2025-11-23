@@ -86,10 +86,29 @@ export default function accueil() {
     if (data.role === 'employee'){
       router.push('/unaccess')
     }
+
+  
+  const deletetask = async (id: number): Promise<void> => {
+    const token = localStorage.getItem("Token")
+    if (!token) {
+      router.push('/login')
+      return
+    }
+    const res = await fetch(`http://localhost:8000/todos/${id}`, {
+      method: "delete",
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+      
+    });
+    
+    }
     
 
   useEffect(() => {
     getData(),
+   
     gettask();
   }, [])
   
@@ -139,7 +158,12 @@ export default function accueil() {
         <ul>
            {task.length===0 && <p>No task assigned yet !</p>}
           { task.map((item) => (
-            <p key={item.id}> <br/><strong>- Title :</strong> {item.title} <br/><strong>Description of the task:</strong> {item.description} <br/><strong>Creation date:</strong> {item.created_at} <br/><strong>due_time:</strong> {item.due_time} <br/> <strong>status:</strong> {item.status} <br/> <strong>employee :</strong>{item.user_id}  </p>
+            <p key={item.id}> <br/><strong>- Title :</strong> {item.title} <br/><strong>Description of the task:</strong> {item.description} <br/><strong>Creation date:</strong> {item.created_at} <br/><strong>due_time:</strong> {item.due_time} <br/> <strong>status:</strong> {item.status} <br/> <strong>employee :</strong>{item.user_id}  
+            
+             <br/><br/> <a className="buttondelete"  href="" onClick={() => deletetask(item.id)}
+              >delete the task</a>
+            
+            </p>
           ))}
         </ul>
 
