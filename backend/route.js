@@ -153,33 +153,33 @@ app.delete('/todos/:id', checkJWT, (req, res) => {
 
 
 
-app.get('/user', (req, res) => {
-    res.send('view all user information');
-});
-app.get('/user/todos', (req, res) => {
-    res.send('view all user tasks');
-});
-app.get('/users/:id or:email', (req, res) => {
-    res.send('view user information');
-});
-app.put('/users/:id', (req, res) => {
-    res.send('update user information');
-});
-app.delete('/users/:id', (req, res) => {
-    res.send('delete user');
-});
-app.get('/todos', (req, res) => {
-    res.send('view all the todos');
-});
-app.post('/todos', (req, res) => {
-    res.send('create a todo');
-});
-app.put('/todos/:id', (req, res) => {
-    res.send('update a todo');
-});
-app.delete('/todos/:id', (req, res) => {
-    res.send('delete a todo');
-});
+// app.get('/user', (req, res) => {
+//     res.send('view all user information');
+// });
+// app.get('/user/todos', (req, res) => {
+//     res.send('view all user tasks');
+// });
+// app.get('/users/:id or:email', (req, res) => {
+//     res.send('view user information');
+// });
+// app.put('/users/:id', (req, res) => {
+//     res.send('update user information');
+// });
+// app.delete('/users/:id', (req, res) => {
+//     res.send('delete user');
+// });
+// app.get('/todos', (req, res) => {
+//     res.send('view all the todos');
+// });
+// app.post('/todos', (req, res) => {
+//     res.send('create a todo');
+// });
+// app.put('/todos/:id', (req, res) => {
+//     res.send('update a todo');
+// });
+// app.delete('/todos/:id', (req, res) => {
+//     res.send('delete a todo');
+// });
 
 
 app.use('/user', router);
