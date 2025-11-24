@@ -9,6 +9,9 @@ const PORT = 8000;
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000' }));
 
+
+
+
 app.get('/user', checkJWT, async (req, res) => {
     try {
         const user_email = req.user.email;
@@ -151,7 +154,31 @@ app.delete('/todos/:id', checkJWT, (req, res) => {
 });
 
 
+app.get('/userall', checkJWT, async (req, res) => {
+    try {
+        
+        var user;
+        
+        const query = 'SELECT * FROM users';
+        connection.query(query, function (err, results) {
+            if (err) throw err;
 
+            if (results.length === 0) {
+                return res.status(404).send('User not found');
+            }
+
+           
+    
+            return res.json({
+                users: results 
+            });
+        });
+
+
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
 
 // app.get('/user', (req, res) => {
 //     res.send('view all user information');

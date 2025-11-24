@@ -26,7 +26,7 @@ export default function accueil() {
   const [task, settask] = useState<Todo[]>([])
   const router = useRouter()
   const [addtask, setaddtask] = useState({ id: '', title:'', description: '', due_time: '', user_id: '' })
-  const [errors, setErrors] = useState({ email: '', password: '' , firstname: '', name:''})
+  const [errors, setErrors] = useState({ id: '', title:'', description: '', due_time: '', user_id: '' })
   const [loading, setLoading] = useState(false)
 
 
@@ -119,14 +119,14 @@ export default function accueil() {
 
   const handleSubmit =  async (e: FormEvent) => {
     e.preventDefault()
-    let newErrors = { email: '', password: '', firstname: '', name: ''}
+    let newErrors = { id: '', title:'', description: '', due_time: '', user_id: '' }
 
-    if (!addtask.title.trim()) newErrors.email = 'Please enter a valid email.'
-    if (!addtask.description.trim()) newErrors.password = 'Password cannot be empty.'
-    if (!addtask.due_time.trim()) newErrors.firstname = 'Please enter your firstname.'
-    if (!addtask.user_id.trim()) newErrors.name = 'Please enter your name.'
+    if (!addtask.title.trim()) newErrors.title = 'Please enter a valid email.'
+    if (!addtask.description.trim()) newErrors.description = 'Password cannot be empty.'
+    if (!addtask.due_time.trim()) newErrors.due_time = 'Please enter your firstname.'
+    if (!addtask.user_id.trim()) newErrors.user_id = 'Please enter your name.'
 
-    if (newErrors.email || newErrors.password) {
+    if (newErrors.title || newErrors.description || newErrors.due_time|| newErrors.user_id ) {
       setErrors(newErrors)
       return
     }
@@ -230,10 +230,12 @@ export default function accueil() {
                 placeholder="Enter the title of the task"
                 value={addtask.title}
                 onChange={handleChange}
-                className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500`}
-              />
+                 className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${
+                  errors.title ? 'border-red-500 ring-red-200' : 'border-gray-300'
+                }`}
+                />
             </div>
-              {errors.email && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+              {errors.title && <p className="mt-1 text-sm text-red-600">{errors.title}</p>}
             </div>
             <div className="mb-6">
             <label htmlFor="description" className="mb-1.5 block text-sm font-medium text-gray-700">
@@ -250,11 +252,12 @@ export default function accueil() {
                 placeholder="Enter the title"
                 value={addtask.description}
                 onChange={handleChange}
-                className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500`}
-                
-              />
+               className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${
+                  errors.title ? 'border-red-500 ring-red-200' : 'border-gray-300'
+                }`}
+                />
             </div>
-             {errors.email && <p className="mt-1 text-sm text-red-600">{errors.firstname}</p>}
+             {errors.title && <p className="mt-1 text-sm text-red-600">{errors.description}</p>}
             
           </div>
           {/* Email */}
@@ -268,17 +271,17 @@ export default function accueil() {
               </span>
               <input
                 id="due_time"
-                type="text"
+                type="date"
                 name="due_time"
                 placeholder="Enter your email"
                 value={addtask.due_time}
                 onChange={handleChange}
                 className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${
-                  errors.email ? 'border-red-500 ring-red-200' : 'border-gray-300'
+                  errors.title ? 'border-red-500 ring-red-200' : 'border-gray-300'
                 }`}
               />
             </div>
-            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+            {errors.due_time && <p className="mt-1 text-sm text-red-600">{errors.due_time}</p>}
           </div>
 
           {/* Password */}
@@ -298,11 +301,11 @@ export default function accueil() {
                 value={addtask.user_id}
                 onChange={handleChange}
                 className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${
-                  errors.password ? 'border-red-500 ring-red-200' : 'border-gray-300'
+                  errors.user_id ? 'border-red-500 ring-red-200' : 'border-gray-300'
                 }`}
               />
             </div>
-            {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
+            {errors.user_id && <p className="mt-1 text-sm text-red-600">{errors.user_id}</p>}
           </div>
 
           {/* Button */}
