@@ -24,14 +24,14 @@ app.get('/user', checkJWT, async (req, res) => {
                 console.log("user  inside callback: ", user)
             
             } else {
-                res.status(404).send('User not found');
+                return res.status(404).send('User not found');
             }
 
             // A move en dehors a l'avenir
             console.log("user before res: ", user)
             console.log("hello")
     
-            res.json({
+            return res.json({
                 id: user.id,
                 name: user.name,
                 firstname: user.firstname,
@@ -61,7 +61,7 @@ app.get('/todos', checkJWT, async (req, res) => {
                 console.log("user  inside callback: ", todos)
             
             } else {
-                res.status(404).send('User not found');
+                return res.status(404).send('User not found');
             }
     
             res.json({todos});

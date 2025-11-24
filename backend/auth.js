@@ -29,12 +29,20 @@ router.post('/register', async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const query = 'INSERT INTO users (name, email, firstname, password) VALUES (?, ?, ?, ?)';
-    db.query(query, [name, email, firstname, hashedPassword], (err, result) => {
-      if (err) throw err;
+    const checkQuery = 'SELECT * FROM users WHERE email = ?';
+    db.query(checkQuery, [email], (err, users) => {
+      if (users.length > 0) {
+        return res.status(400).json({ msg: "Email already exist" });
+      }
+
+      const query = 'INSERT INTO users (name, email, firstname, password) VALUES (?, ?, ?, ?)';
+      db.query(query, [name, email, firstname, hashedPassword], (err, result) => {
+        if (err) throw err;
       res.status(201).send("User registered successfully");
     });
+    });
   } catch (error) {
+    console.error(error);
     res.status(500).send('Error registering user');
   }
 });
