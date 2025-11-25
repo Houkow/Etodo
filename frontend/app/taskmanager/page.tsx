@@ -36,7 +36,7 @@ export default function accueil() {
       router.push('/login')
       return
     }
-    const res = await fetch('http://localhost:8000/user', {
+    const res = await fetch('http://localhost:8000/user/me', {
 
       headers: {
         'Authorization': `Bearer ${token}`,

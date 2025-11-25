@@ -25,7 +25,7 @@ export default function accueil() {
       router.push('/login')
       return
     }
-    const res = await fetch('http://localhost:8000/user', {
+    const res = await fetch('http://localhost:8000/user/me', {
 
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -119,7 +119,7 @@ export default function accueil() {
     <div>
       <link rel="stylesheet" href="style.css" />
       <header>
-        <h2> 👋 Welcome to your work environment, {data.name}  !</h2>
+        <h2> Here, {data.name} you can see your profil  !</h2>
         <nav className="navbar">
           <ul className="nav-links">
             <li><a href="/accueil">Home</a></li>

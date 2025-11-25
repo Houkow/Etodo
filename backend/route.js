@@ -40,7 +40,7 @@ app.get('/user', checkJWT, async (req, res) => {
 
 
 // view a specific user information
-app.get('/users', checkJWT, async (req, res) => {
+app.get('/user/me', checkJWT, async (req, res) => {
     try {
         const user_email = req.user.email;
         console.log(user_email)
