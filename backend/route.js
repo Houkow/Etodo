@@ -10,9 +10,37 @@ app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000' }));
 
 
-
-
+// view all user information
 app.get('/user', checkJWT, async (req, res) => {
+    try {
+        
+        var user;
+        
+        const query = 'SELECT * FROM users';
+        connection.query(query, function (err, results) {
+            if (err) throw err;
+
+            if (results.length === 0) {
+                return res.status(404).send('User not found');
+            }
+
+           
+    
+            return res.json({
+                users: results 
+            });
+        });
+
+
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
+
+
+
+// view a specific user information
+app.get('/users', checkJWT, async (req, res) => {
     try {
         const user_email = req.user.email;
         console.log(user_email)
@@ -22,6 +50,7 @@ app.get('/user', checkJWT, async (req, res) => {
         connection.query(query, [user_email], function (err, results) {
             if (err) throw err;
 
+
             if (results.length > 0) {
                 user = results[0];
                 console.log("user  inside callback: ", user)
@@ -29,6 +58,7 @@ app.get('/user', checkJWT, async (req, res) => {
             } else {
                 return res.status(404).send('User not found');
             }
+
 
             // A move en dehors a l'avenir
             console.log("user before res: ", user)
@@ -154,31 +184,6 @@ app.delete('/todos/:id', checkJWT, (req, res) => {
 });
 
 
-app.get('/userall', checkJWT, async (req, res) => {
-    try {
-        
-        var user;
-        
-        const query = 'SELECT * FROM users';
-        connection.query(query, function (err, results) {
-            if (err) throw err;
-
-            if (results.length === 0) {
-                return res.status(404).send('User not found');
-            }
-
-           
-    
-            return res.json({
-                users: results 
-            });
-        });
-
-
-    } catch (error) {
-        res.status(500).json({ message: 'Server Error' });
-    }
-});
 
 // app.get('/user', (req, res) => {
 //     res.send('view all user information');

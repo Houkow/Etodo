@@ -15,23 +15,23 @@ interface Todo {
 
 
 export default function accueil() {
-  const [data, setData] = useState({ name: "", role: "", firstname: "" })
+  const [data, setData] = useState({ name: "", role: "", firstname: "", email:""  })
   const [displaytask, setdisplaytask] = useState<Todo[]>([])
   const router = useRouter()
 
-  const getData = async () => {
+const getData = async () => {
     const token = localStorage.getItem("Token")
     if (!token) {
       router.push('/login')
       return
     }
-    const res = await fetch('http://localhost:8000/user', {
-
+    const res = await fetch(`http://localhost:8000/users`, {
+ 
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-
+ 
     })
     if (res.status === 401 || res.status === 403) {
       localStorage.removeItem("Token")
