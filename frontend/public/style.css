@@ -1,26 +1,27 @@
 
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f4f8;
-  color: #2d3748;
+  font-family: 'Times New Roman', Times, sans-serif;
+  background-color:#fff8f8;
+  color: rgb(11, 12, 12)
 }
 
 /* HEADER */
 header {
-  background: linear-gradient(135deg, #4a90e2 0%, #a12ff2 100%);
-  color: white;
+  background-color: aquamarine;
+ color: #0e0e0e;
   padding: 50px;
   text-align: center;
   border-radius: 15px;
   margin: 100px 0 50px 0;
-  box-shadow: 0 10px 30px rgba(74, 145, 226, 0.7);
+  box-shadow: 0 10px 30px rgba(109, 31, 31, 0.7);
 }
 
 header h2 {
   font-size: 22px;
   font-weight: normal;
   opacity: 0.9;
+  background-color: linear-gradient(135deg, #080808 0%, #f22f2f 100%)
 }
 
 /* NAVBAR */
@@ -29,7 +30,7 @@ header h2 {
   top: 0;
   left: 0;
   width: 100%;
-  background: white;
+  background: rgb(53, 216, 238);
   display: flex;
   align-items: center;
   padding: 15px 20px;
@@ -53,7 +54,7 @@ header h2 {
   padding: 8px 12px;
   border-radius: 8px;
   transition: 0.3s ease;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Times New Roman', Times, sans-serif;;
   
 }
 
@@ -89,7 +90,7 @@ header h2 {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
+  background-color: #36cfda;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1001;
@@ -127,21 +128,22 @@ header h2 {
 
 /* SECTION */
 section {
-  background-color: white;
+  background-color: rgb(97, 243, 248);
   padding: 35px;
   margin-bottom: 50px;
   scroll-margin-top: 70px;
   border-radius: 12px;
-  border: 2px solid #e2e8f0;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  border: 2px solid #f8feff;
+  box-shadow: 0 4px 15px rgba(12, 12, 12, 0.664);
 }
 
 section h2 {
-  color: #4a90e2;
+  color: #050505;
   font-size: 32px;
   margin-bottom: 30px;
-  border-bottom: 4px solid #4a90e2;
+  border-bottom: 4px solid #08090a;
   padding-bottom: 12px;
+  
 }
 
 /* COLLAPSE */
@@ -171,7 +173,7 @@ section h2 {
 
 /* FOOTER */
 footer {
-  background-color: white;
+  background-color: rgb(97, 243, 248);
   color: #2d3748;
   text-align: center;
   padding: 25px;
@@ -183,12 +185,18 @@ footer {
 footer p {
   font-size: 16px;
   line-height: 180%;
+  font-family: 'Times New Roman', Times, sans-serif;
+  color: #050505;
+
+ 
 }
 
 
 
+
+
 .buttonhome {
-  background: linear-gradient(135deg, #4a90e2 0%, #a12ff2 100%);
+  background: linear-gradient(135deg, #ca2f2f 0%, #070606 100%);
   margin: 100px 0 50px 0;
   color: white;
   padding: 15px;

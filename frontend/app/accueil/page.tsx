@@ -25,7 +25,7 @@ const getData = async () => {
       router.push('/login')
       return
     }
-    const res = await fetch(`http://localhost:8000/users`, {
+    const res = await fetch(`http://localhost:8000/user/me`, {
  
       headers: {
         'Authorization': `Bearer ${token}`,
