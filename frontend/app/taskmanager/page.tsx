@@ -28,6 +28,7 @@ export default function accueil() {
   const [addtask, setaddtask] = useState({ id: '', title:'', description: '', due_time: '', user_id: '' })
   const [errors, setErrors] = useState({ id: '', title:'', description: '', due_time: '', user_id: '' })
   const [loading, setLoading] = useState(false)
+  const [users, setUsers] = useState<{ id: number; name: string }[]>([])
 
 
   const getData = async () => {
@@ -111,7 +112,7 @@ export default function accueil() {
     }
  
 /////////////////////////////
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setaddtask({ ...addtask, [name]: value })
     setErrors({ ...errors, [name]: '' })
@@ -160,11 +161,39 @@ export default function accueil() {
       setLoading(false)
     }
   }
+    const getinfo = async () => {
+    const token = localStorage.getItem("Token")
+    if (!token) {
+      router.push('/login')
+      return
+    }
+    const res = await fetch('http://localhost:8000/user', {
+
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+
+    })
     
+    if (res.status === 401 || res.status === 403) {
+      localStorage.removeItem("Token")
+      router.push('/login')
+      return
+    }
+  const json = await res.json()
+
+  setUsers(Array.isArray(json) ? json : (json.users ?? []))
+    
+    if (json.role === 'employee') {
+      router.push('/unaccess')
+    }
+  }
     
 
   useEffect(() => {
     getData(),
+    getinfo()
     gettask();
   }, [])
   
@@ -284,7 +313,7 @@ export default function accueil() {
             {errors.due_time && <p className="mt-1 text-sm text-red-600">{errors.due_time}</p>}
           </div>
 
-          {/* Password */}
+          {/* user_id */}
           <div className="mb-6">
             <label htmlFor="user_id" className="mb-1.5 block text-sm font-medium text-gray-500">
               user_id
@@ -293,17 +322,21 @@ export default function accueil() {
               <span className="absolute left-3 text-gray-500 ">
                 <Lock size={20} />
               </span>
-              <input
+              <select
                 id="user_id"
-                type="text"
                 name="user_id"
-                placeholder="Enter your password"
                 value={addtask.user_id}
                 onChange={handleChange}
                 className={`w-full rounded-lg border px-4 py-2.5 pl-10 focus:ring-2 focus:ring-blue-200 text-gray-500 ${
                   errors.user_id ? 'border-red-500 ring-red-200' : 'border-gray-300'
+                  
                 }`}
-              />
+              >
+           <option value="">Select a user</option>
+           {Array.isArray(users) && users.map(user => (<option key={user.id} value={user.id}>{user.name} (id: {user.id})
+            </option>
+           ))}
+           </select>
             </div>
             {errors.user_id && <p className="mt-1 text-sm text-red-600">{errors.user_id}</p>}
           </div>
@@ -314,7 +347,7 @@ export default function accueil() {
             disabled={loading}
             className="flex h-10 w-full items-center justify-center rounded-lg bg-neutral-800 text-white hover:bg-neutral-700 disabled:bg-gray-300"
           >
-            {loading ? <LoaderCircle className="animate-spin" size={20} /> : 'Sign in'}
+            {loading ? <LoaderCircle className="animate-spin" size={20} /> : 'Add the task'}
           </button>
         </form>
 
